@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matemático curioso</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      display: inline-block;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <h1>Matemático curioso</h1>
+  <p>Ingresa un Numero (1 ≤ S < 10,000):</p>
+  <input type="number" id="seed" min="1" max="9999">
+  <button id="calculate">Calcular</button>
+
+  <div id="result" style="display: none;">
+    <p><strong>Sequencia
+    </strong> <span id="sequence"></span></p>
+    <p><strong>Longitud:</strong> <span id="length"></span></p>
+    <p><strong>Número más grande
+        :</strong> <span id="largest"></span></p>
+  </div>
+
+  <script>
+    document.getElementById('calculate').addEventListener('click', () => {
+      const seedInput = document.getElementById('seed');
+      const seed = parseInt(seedInput.value);
+
+      if (isNaN(seed) || seed < 1 || seed >= 10000) {
+        alert('Porfavor ingresar un nuero valido entre el 1 y el 9999.');
+        return;
+      }
+
+      let sequence = [];
+      let current = seed;
+      let largest = seed;
+
+      while (current !== 1) {
+        sequence.push(current);
+        if (current > largest) largest = current;
+        current = current % 2 === 0 ? current / 2 : current * 3 + 1;
+      }
+      sequence.push(1); // Add the final 1 to the sequence
+
+      // Update the result in the DOM
+      document.getElementById('sequence').textContent = sequence.join(', ');
+      document.getElementById('length').textContent = sequence.length;
+      document.getElementById('largest').textContent = largest;
+      document.getElementById('result').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
